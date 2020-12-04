@@ -10,5 +10,9 @@
   <mapping class="udemy_hibernate.entity.Pet"/>
   <mapping class="udemy_hibernate.entity.Owner"/>
    <mapping class="udemy_hibernate.entity.Vet"/>
+   <mapping class="udemy_hibernate.entity.Visit"/>
+   <mapping class="udemy_hibernate.entity.Image"/>
+   <mapping class="udemy_hibernate.entity.ImageContent"/>
+   
  </session-factory>
 </hibernate-configuration>

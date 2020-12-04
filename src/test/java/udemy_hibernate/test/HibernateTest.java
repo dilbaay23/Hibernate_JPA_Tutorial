@@ -18,6 +18,7 @@ import udemy_hibernate.entity.Owner;
 import udemy_hibernate.entity.OwnerWithCompositePK;
 import udemy_hibernate.entity.OwnerWithCompositePK.OwnerId;
 import udemy_hibernate.entity.Pet;
+import udemy_hibernate.entity.Rating;
 
 public class HibernateTest {
 	@Test
@@ -145,6 +146,7 @@ public class HibernateTest {
 		Owner owner = new Owner();
 		owner.setFirstName("Elif");
 		owner.setLastName("Koc");
+		owner.setRating(Rating.PREMIUM);
 		
 		Address address = new Address();
 		address.setStreet("Azale");
