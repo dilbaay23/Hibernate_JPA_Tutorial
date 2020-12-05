@@ -1,11 +1,16 @@
 package udemy_hibernate.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,8 +29,23 @@ public class Pet extends BaseEntity{
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
+	@ManyToOne
+	@JoinColumn(name="type_id")
+	private PetType petType;
+	
+	@ManyToOne
+	@JoinColumn(name="owner_id")
+	private Owner owner;
+	
+	@OneToMany
+	@JoinColumn(name="pet_id")
+	@OrderColumn(name = "visit_order")
+	private List<Visit> visits = new ArrayList<>();
+	
+	
+	
 	public Pet() {
-		this.birthDate=birthDate;
+		
 	}  
 	
 	public Pet(String name, Date birthDate) {
@@ -35,6 +55,30 @@ public class Pet extends BaseEntity{
 
 
 
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public PetType getPetType() {
+		return petType;
+	}
+
+	public void setPetType(PetType petType) {
+		this.petType = petType;
+	}
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+ 
 	public String getName() {
 		return name;
 	}

@@ -13,6 +13,10 @@
    <mapping class="udemy_hibernate.entity.Visit"/>
    <mapping class="udemy_hibernate.entity.Image"/>
    <mapping class="udemy_hibernate.entity.ImageContent"/>
+    <mapping class="udemy_hibernate.entity.City"/>
+   <mapping class="udemy_hibernate.entity.PetType"/>
+   <mapping class="udemy_hibernate.entity.Clinic"/>
+   <mapping class="udemy_hibernate.entity.Specialty"/>
    
  </session-factory>
 </hibernate-configuration>
