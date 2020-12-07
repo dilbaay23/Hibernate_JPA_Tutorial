@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.stat.EntityStatistics;
+import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
 import udemy_hibernate.config.HibernateConfig;
@@ -21,13 +23,49 @@ import udemy_hibernate.entity.Pet;
 import udemy_hibernate.entity.Rating;
 
 public class HibernateTest {
+
+	
+	@Test
+	public void testLoad() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Pet pet = session.load(Pet.class, 1L);
+		System.out.println(".....Pet Loading.......");
+		if (pet==null) {
+			System.out.println("pet is null returning");
+			
+		}
+		System.out.println(pet.getName());
+		System.out.println(pet.getClass());
+			
+	
+	}
+	
+	@Test
+	public void testGet() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Pet pet = session.get(Pet.class, 1L);
+		System.out.println(".....Pet Loading.......");
+		if (pet==null) {
+			System.out.println("pet is null returning");
+			
+		}
+		System.out.println(pet.getName());
+		System.out.println(pet.getClass());
+			
+	
+	}
+	
 	@Test
 	public void testHibernateSetup() {
 		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		tx.commit();
 		session.close(); // we should always close session. a session is for only a user and it must not take long time that a session waits as open, to get updated info
-		//HibernateConfig.getSessionFactory().close(); // this is for testing. normally we do this before terminate the application.
+		HibernateConfig.getSessionFactory().close(); // this is for testing. normally we do this before terminate the application.
 	}
 	
 	@Test
@@ -161,6 +199,8 @@ public class HibernateTest {
 		session.close(); 
 	    	
 	}
+	
+	
 	
 	
 

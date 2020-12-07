@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,7 +22,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-
+@DiscriminatorValue("O")
 @TypeDef(name="ratingType", typeClass = RatingUserType.class)              // this is for UserType implementation class. we write over class and it is Global annotation. then we can use this over methods if we need
 @SecondaryTable(name = "t_address", pkJoinColumns = @PrimaryKeyJoinColumn(name="owner_id"))
 @Entity

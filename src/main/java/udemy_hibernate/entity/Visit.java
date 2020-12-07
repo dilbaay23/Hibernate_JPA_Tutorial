@@ -4,7 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,6 +23,11 @@ public class Visit extends BaseEntity {
 	@Lob
 	@Column(name="visit_description")
 	private String visitDescription;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="pet_id", insertable=false, updatable=false)   //it is used for ordered list. we disable the manage of Pet side. 
+	private Pet pet;
 	
 
 	public Date getVisitDate() {
