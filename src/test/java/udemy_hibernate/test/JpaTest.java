@@ -5,6 +5,11 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
 import udemy_hibernate.config.JpaConfig;
@@ -12,8 +17,49 @@ import udemy_hibernate.entity.Address;
 import udemy_hibernate.entity.Owner;
 import udemy_hibernate.entity.Pet;
 import udemy_hibernate.entity.Rating;
+import udemy_hibernate.entity.Visit;
 
 public class JpaTest {
+	
+	@Test
+	public void testDelete() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx= entityManager.getTransaction();
+		tx.begin();
+		
+		Visit visit = entityManager.find(Visit.class,1L);
+		entityManager.remove(visit);
+		
+		/*                       //  in JPA  if the entity is detached then you should first merge the object and assign to a new object(it must be reattached) to do something with this object
+		entityManager.clear();
+		
+		Visit visit1= entityManager.merge(visit);
+		entityManager.remove(visit1);
+		*/
+		
+		tx.commit();
+		entityManager.close();
+		
+		
+	}
+	
+	
+	@Test
+	public void testHibernateApiAccess() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx= entityManager.getTransaction();
+		tx.begin();
+		
+		SessionFactory sf = (SessionFactory)JpaConfig.getEntityManagerFactory();  //we can access hibernate methods and objects by casting. 
+		Session session= (Session) entityManager;
+		Transaction hibernateTx = (Transaction) tx;
+		
+		Statistics statistics = sf.getStatistics();
+		session.setHibernateFlushMode(FlushMode.MANUAL);
+		
+		
+	}
+	
 
 	@Test
 	public void testJpaSetup() {

@@ -13,7 +13,7 @@ public class HibernateConfig {
 	}
 	
 	static {
-		Configuration cfg = new Configuration().configure();  // loads the hibernate confiurations
+		Configuration cfg = new Configuration().configure();  // loads the hibernate configurations
 		sessionFactory=cfg.buildSessionFactory();
 	}
 

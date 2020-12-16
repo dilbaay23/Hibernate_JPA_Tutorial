@@ -20,9 +20,109 @@ import udemy_hibernate.entity.Owner;
 import udemy_hibernate.entity.OwnerWithCompositePK;
 import udemy_hibernate.entity.OwnerWithCompositePK.OwnerId;
 import udemy_hibernate.entity.Pet;
+import udemy_hibernate.entity.PetType;
 import udemy_hibernate.entity.Rating;
+import udemy_hibernate.entity.Visit;
 
 public class HibernateTest {
+	
+	@Test
+	public void testAuditInterceptor() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Pet pet = new Pet("mars2",new Date());
+
+		
+		session.persist(pet);
+		
+		
+		Pet pet2= session.get(Pet.class,1000L);
+		
+		pet2.setBirthDate(null);
+		
+		session.delete(session.load(Pet.class, 2000L));
+		
+		
+		tx.commit();
+		session.close();
+	
+	}
+	
+	@Test
+	public void testDelete() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Visit visit = session.get(Visit.class, 1L);
+		session.delete(visit);   // you can delete the objects both in session and detached in hibernate directly with delete method without doing extra things
+		
+		tx.commit();
+		session.close();
+	
+	}
+	
+	
+	@Test
+	public void testDetachedEntitiesAndLazy() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Pet pet = session.get(Pet.class, 1L);
+	
+	
+		
+		//session.close();
+		//session.clear();
+		session.evict(pet);  // session is still open but the pet entity is not in persistence context anymore
+		
+		System.out.println(".......after session evict....");
+		
+		System.out.println("Session open: " + session.isOpen());
+		
+		session.update(pet);
+		//session.saveOrUpdate(pet); it uses update method at the back
+		
+		System.out.println(String.format("Pets name size: %s", (pet.getName()).length()));
+		System.out.printf("Pets name size: %d %tA%n", (pet.getName()).length(),new Date());
+		
+		tx.commit();
+		session.close();
+	
+	}
+	
+	@Test
+	public void testDetachedEntities() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Pet pet = session.get(Pet.class, 1L);
+		
+		session.close();
+		pet.setBirthDate(new Date());
+		
+	
+		tx.commit();
+			
+	}
+	
+	
+	@Test
+	public void testUpdate() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		 
+		Pet pet = session.get(Pet.class, 1L);
+		pet.setBirthDate(new Date());
+		
+		pet.setPetType((PetType) session.load(PetType.class,1L));
+		System.out.println(pet.getBirthDate());
+		
+		
+		tx.commit();
+		session.close();
+	
+	}
 
 	
 	@Test

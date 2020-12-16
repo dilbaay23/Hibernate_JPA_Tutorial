@@ -18,6 +18,15 @@
    <mapping class="udemy_hibernate.entity.Clinic"/>
    <mapping class="udemy_hibernate.entity.Specialty"/>
    <mapping class="udemy_hibernate.entity.Person"/>
+   <event type= "post-insert">
+   	<listener class="udemy_hibernate.event.AuditEntityInsertListener"/>  
+   </event>
+   <event type= "post-update">
+   	<listener class="udemy_hibernate.event.AuditEntityUpdateListener"/>  
+   </event>
+   <event type= "post-delete">
+   	<listener class="udemy_hibernate.event.AuditEntityDeleteListener"/>  
+   </event>
    
  </session-factory>
 </hibernate-configuration>
