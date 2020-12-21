@@ -4,11 +4,14 @@ package udemy_hibernate.test;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
 import org.junit.Test;
@@ -26,7 +29,25 @@ import udemy_hibernate.entity.Visit;
 
 public class HibernateTest {
 	
-
+	
+	@Test
+	public void testHql() {
+	
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		String queryString="select p from Pet p where p.name like :petName or p.petType.id = :typeId";
+		
+		Query<Pet> query= session.createQuery(queryString);
+		
+		query.setParameter("petName", "M%");
+		query.setParameter("typeId", 2L);
+		
+		List<Pet> resultList = query.getResultList();
+		
+		System.out.println("----query executed----");
+		resultList.forEach(System.out::println);
+		
+		}
+	
 	
 	@Test
 	public void testAuditInterceptor() {
