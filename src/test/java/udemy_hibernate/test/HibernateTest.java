@@ -26,6 +26,8 @@ import udemy_hibernate.entity.Visit;
 
 public class HibernateTest {
 	
+
+	
 	@Test
 	public void testAuditInterceptor() {
 		Session session = (Session) HibernateConfig.getSessionFactory().openSession();

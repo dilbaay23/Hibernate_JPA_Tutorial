@@ -22,6 +22,30 @@ import udemy_hibernate.entity.Visit;
 public class JpaTest {
 	
 	@Test
+	public void testLifeCycleCallbacks() {
+		
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx= entityManager.getTransaction();
+		tx.begin();
+		
+		Pet pet = new Pet("mars2",new Date());
+		
+		entityManager.persist(pet);
+
+		
+		Pet pet2= entityManager.find(Pet.class,2L);
+		
+		pet2.setBirthDate(null);
+		
+		entityManager.remove(entityManager.getReference(Pet.class, 4L));
+		
+		tx.commit();
+		entityManager.close();
+		
+		
+	}
+	
+	@Test
 	public void testDelete() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
 		EntityTransaction tx= entityManager.getTransaction();
