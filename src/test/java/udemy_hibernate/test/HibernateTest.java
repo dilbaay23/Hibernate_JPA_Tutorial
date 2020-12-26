@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.junit.Test;
 
 import udemy_hibernate.config.HibernateConfig;
@@ -29,6 +30,111 @@ import udemy_hibernate.entity.Visit;
 
 public class HibernateTest {
 	
+	@Test
+	public void testQueriesWithDTO() {
+		
+		/*
+		 * 
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select new udemy_hibernate.entity.Pet(p.name, p.birthDate) from Pet p";   
+		
+
+		List<Pet> resultList = session.createQuery(queryString).getResultList(); 
+		
+		resultList.forEach(System.out::println);
+		
+		*/
+		
+		
+		 // other alternative for create a Dto object
+		
+		 
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select p.name as name,  p.birthDate as birthDate from Pet p";   
+		
+
+		List<Pet> resultList = session.createQuery(queryString).setResultTransformer(new AliasToBeanResultTransformer(Pet.class)).getResultList();
+		
+		resultList.forEach(System.out::println);
+		 
+					
+	}
+	
+	
+	
+	@Test
+	public void testRaporQueries() {
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select p.name, p.birthDate from Pet p";   
+		
+
+		
+		List<Object[]> resultList = session.createQuery(queryString).getResultList();   
+		
+		for(Object[] row : resultList) {   
+			
+			String name=(String) row[0];
+			Date birthDate = (Date)row[1];
+			System.out.printf("Pet with name: %s and birth date : %s \n", name,birthDate);
+			
+		}
+				
+	}
+	
+	
+	
+	@Test
+	public void testOwnerJoins() {
+	
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select distinct o from Owner o inner join o.pets p where p.name like :petName";   
+		
+		Query<Owner> query = session.createQuery(queryString);
+		
+		query.setParameter("petName", "%");
+		
+		List<Owner> resultList = query.getResultList();   //it returns an Object array List because of join. first element of Object[] owner and second element is Pet. 
+		
+		resultList.forEach(System.out::println);
+		
+	}
+		
+		
+		
+		
+	
+		
+	
+	@Test
+	public void testJoins() {
+	
+		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "from Owner o inner join o.pets p where p.name like :petName";   // we dont have to use "select from" . it is an optional using
+		
+		Query query = session.createQuery(queryString);
+		
+		query.setParameter("petName", "K%");
+		
+		List<Object[]> resultList = query.getResultList();   //it returns an Object array List because of join. first element of Object[] owner and second element is Pet. 
+		
+		for(Object[] row : resultList) {   
+			
+			Owner o = (Owner) row[0];
+			Pet p= (Pet)row[1];
+			System.out.println("Owner : " + o);
+			System.out.println("Pet : " + p);
+			
+		}
+		
+	
+	}
+	
+	
 	
 	@Test
 	public void testHql() {
@@ -36,10 +142,23 @@ public class HibernateTest {
 		Session session = (Session) HibernateConfig.getSessionFactory().openSession();
 		String queryString="select p from Pet p where p.name like :petName or p.petType.id = :typeId";
 		
+		//String queryString="select p from Pet p where p.name like ?1 or p.petType.id =?2";    //positional Parameters. it is not recommended practice. named Parameters using is better than positional parameters
+		
 		Query<Pet> query= session.createQuery(queryString);
 		
-		query.setParameter("petName", "M%");
-		query.setParameter("typeId", 2L);
+		
+		//named Paremeters
+		query.setParameter("petName", "A%");
+		query.setParameter("typeId", 1L);
+		
+		/*
+		 // for positional Parameters use keys. 
+		query.setParameter(1, "M%");
+		query.setParameter(2, 1L);
+		*/
+	
+		
+		
 		
 		List<Pet> resultList = query.getResultList();
 		

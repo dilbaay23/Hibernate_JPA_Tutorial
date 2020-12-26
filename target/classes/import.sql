@@ -28,12 +28,12 @@ INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('V',5,  'Hasan', 'Sari',100,1);
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('V',6,  'Sedat', 'Kuzu',100,1);
 
-INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',7,  'Ziya', 'Ferit',200,0);
+INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',7,  'Baha', 'Koc',200,0);
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',8,  'Besir', 'Dal',200,0);
-INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',9,  'Eda', 'Rize',200,0);
-INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',10,  'Hadi', 'Duru',200,0);
+INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',9,  'Elif', 'Koc',200,0);
+INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',10,  'Selim', 'Duru',200,0);
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',11,  'Pinar', 'Mus',200,0);
-INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',12,  'Çigdem', 'Su',200,0);
+INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',12,  'Moon', 'Su',200,0);
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',13,  'Asli', 'Zor',200,0);
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',14,  'Murat', 'Eski',200,0);
 INSERT INTO t_person (person_type,id,first_name,last_name,rating,works_full_time) VALUES ('O',15,  'Davut', 'Saz',200,0);

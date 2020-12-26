@@ -1,17 +1,21 @@
 package udemy_hibernate.test;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
+import udemy_hibernate.config.HibernateConfig;
 import udemy_hibernate.config.JpaConfig;
 import udemy_hibernate.entity.Address;
 import udemy_hibernate.entity.Owner;
@@ -20,6 +24,37 @@ import udemy_hibernate.entity.Rating;
 import udemy_hibernate.entity.Visit;
 
 public class JpaTest {
+	
+	
+	@Test
+	public void testJpql() {
+	
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		//String queryString="select p from Pet p where p.name like :petName or p.petType.id = :typeId";
+		
+		String queryString="select p from Pet p where p.name like ?1 or p.petType.id =?2";    //positional Parameters. it is not best practice. Use-keys of named Parameters is better than positional parameters
+		
+		
+		TypedQuery<Pet> typedQuery= entityManager.createQuery(queryString,Pet.class);
+		
+		/*
+		//named Paremeters
+		typedQuery.setParameter("petName", "K%");
+		typedQuery.setParameter("typeId", 2L);
+		*/
+		
+		 // for positional Parameters use keys. 
+		typedQuery.setParameter(1, "S%");
+		typedQuery.setParameter(2, 5L);
+		
+		
+		List<Pet> resultList = typedQuery.getResultList();
+		
+		System.out.println("----query executed----");
+		resultList.forEach(System.out::println);
+		
+		}
 	
 	@Test
 	public void testLifeCycleCallbacks() {
